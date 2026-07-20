@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>ReySo | جزئیات محصول</title>
+
+
+    <!-- Favicon -->
+
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+
+    <!-- Font (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/fonts.css">
+
+
+    <!-- Icons (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/remixicon.css">
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/responsive.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="background-glow"></div>
+<div class="background-glow-soft"></div>
+<div class="background-line"></div>
+
+
+
+<!-- ======================
+        HEADER
+====================== -->
+
+
+<div id="site-header"></div>
+
+
+<!-- ======================
+      PRODUCT DETAIL
+====================== -->
+
+<section class="pd-section">
+<div class="container">
+
+    <p class="pd-crumbs"><a href="index.html">خانه</a> / <a href="shop.html">محصولات</a> / <span class="pd-crumb-current"></span></p>
+
+    <div class="pd-grid">
+
+        <div class="pd-gallery">
+            <div class="pd-gallery-main">
+                <img id="pd-main-image" src="" alt="">
+            </div>
+            <div class="pd-thumbs" id="pd-thumbs"></div>
+        </div>
+
+        <div class="pd-info">
+
+            <div class="pd-rating">
+                <span class="pd-stars" id="pd-stars"></span>
+                <span id="pd-reviews"></span>
+            </div>
+
+            <h1 id="pd-name"></h1>
+
+            <p class="pd-desc" id="pd-desc"></p>
+
+            <div class="pd-price">
+                <span class="now" id="pd-price-now"></span>
+                <span class="was" id="pd-price-old"></span>
+                <span class="badge" id="pd-discount-badge" hidden></span>
+            </div>
+
+            <div class="pd-block">
+                <p>سایز</p>
+                <div class="pd-options" id="pd-sizes"></div>
+            </div>
+
+            <div class="pd-block">
+                <p>رنگ</p>
+                <div class="pd-options" id="pd-colors"></div>
+            </div>
+
+            <div class="pd-block">
+                <p>تعداد</p>
+                <div class="pd-qty">
+                    <button type="button" id="pd-qty-minus">−</button>
+                    <span id="pd-qty-value">۱</span>
+                    <button type="button" id="pd-qty-plus">+</button>
+                </div>
+            </div>
+
+            <div class="pd-cta">
+                <button type="button" class="pd-add-btn" id="pd-add-btn">افزودن به سبد خرید</button>
+                <button type="button" class="pd-wish-btn wishlist-btn" id="pd-wish-btn" aria-label="افزودن به علاقه‌مندی‌ها">
+                    <i class="ri-heart-line"></i>
+                </button>
+            </div>
+
+            <p class="pd-add-note" id="pd-add-note" hidden>به سبد خرید اضافه شد.</p>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+
+<div id="site-footer"></div>
+
+
+<script src="js/partials.js"></script>
+
+<script src="js/products.js"></script>
+
+<script src="js/shop-details.js"></script>
+
+<script src="js/wishlist.js"></script>
+
+<script src="js/cart.js"></script>
+
+<script src="js/mobile-menu.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>ReySo | سبد خرید</title>
+
+
+    <!-- Favicon -->
+
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+
+    <!-- Font (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/fonts.css">
+
+
+    <!-- Icons (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/remixicon.css">
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/responsive.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="background-glow"></div>
+<div class="background-glow-soft"></div>
+<div class="background-line"></div>
+
+
+
+<!-- ======================
+        HEADER
+====================== -->
+
+
+<div id="site-header"></div>
+
+
+<!-- ======================
+      CART
+====================== -->
+
+<section class="cart-section">
+<div class="container">
+
+    <p class="pd-crumbs"><a href="index.html">خانه</a> / <span>سبد خرید</span></p>
+
+    <h1 class="cart-title">سبد خرید شما</h1>
+
+    <div class="cart-layout" id="cart-layout">
+
+        <div class="cart-items" id="cart-items"></div>
+
+        <div class="cart-summary">
+            <h4>خلاصه سفارش</h4>
+
+            <div class="cart-summary-row">
+                <span>جمع جزء</span>
+                <span id="cart-subtotal">۰ تومان</span>
+            </div>
+
+            <div class="cart-summary-row">
+                <span>هزینه ارسال</span>
+                <span class="cart-shipping-free">رایگان</span>
+            </div>
+
+            <div class="cart-summary-divider"></div>
+
+            <div class="cart-summary-row cart-summary-total">
+                <span>مبلغ نهایی</span>
+                <span id="cart-total">۰ تومان</span>
+            </div>
+
+            <button type="button" class="cart-checkout-btn" id="cart-checkout-btn">
+                ادامه فرآیند خرید
+                <i class="ri-arrow-left-line"></i>
+            </button>
+
+            <a href="shop.html" class="cart-continue-link">
+                <i class="ri-arrow-left-line"></i> ادامه خرید
+            </a>
+
+            <p class="cart-secure-note">
+                <i class="ri-shield-check-line"></i>
+                پرداخت امن و ضمانت اصالت کالا
+            </p>
+        </div>
+
+    </div>
+
+    <div class="cart-empty" id="cart-empty" hidden>
+        <i class="ri-shopping-bag-3-line"></i>
+        <p>سبد خرید شما هنوز خالیه</p>
+        <a href="shop.html" class="cart-empty-btn">مشاهده محصولات</a>
+    </div>
+
+</div>
+</section>
+
+
+<div id="site-footer"></div>
+
+
+<script src="js/partials.js"></script>
+
+<script src="js/products.js"></script>
+
+<script src="js/cart.js"></script>
+
+<script src="js/wishlist.js"></script>
+
+<script src="js/mobile-menu.js"></script>
+
+</body>
+</html>

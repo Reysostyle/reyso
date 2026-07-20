@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>ReySo | پیگیری سفارش</title>
+
+
+    <!-- Favicon -->
+
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+
+    <!-- Font (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/fonts.css">
+
+
+    <!-- Icons (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/remixicon.css">
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/responsive.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="background-glow"></div>
+<div class="background-glow-soft"></div>
+<div class="background-line"></div>
+
+
+<!-- ======================
+        HEADER
+====================== -->
+
+
+<div id="site-header"></div>
+
+
+<!-- ======================
+      ORDER TRACKING
+====================== -->
+
+<section class="track-section">
+<div class="container">
+
+    <p class="pd-crumbs"><a href="index.html">خانه</a> / <span>پیگیری سفارش</span></p>
+
+    <h1 class="cart-title">پیگیری سفارش</h1>
+
+    <p class="track-intro">
+        کد سفارشی که بعد از ثبت درخواست دریافت کردی رو وارد کن تا از وضعیت پرداخت و تولید سفارشت باخبر بشی.
+    </p>
+
+    <form class="track-form" id="track-form">
+        <input type="text" id="track-order-id" placeholder="مثلاً RS20260720-1234" required>
+        <button type="submit" class="contact-submit-btn">پیگیری سفارش</button>
+    </form>
+
+    <p class="track-not-configured" id="track-not-configured">
+        این بخش به‌زودی مستقیم به سیستم سفارش‌ها وصل می‌شه. فعلاً برای پیگیری دقیق‌تر از طریق تلگرام باهامون در ارتباط باش.
+    </p>
+
+    <p class="track-error" id="track-error" hidden>سفارشی با این کد پیدا نشد. لطفاً کد سفارش رو دوباره بررسی کن.</p>
+
+    <div class="track-result" id="track-result" hidden>
+        <h3>وضعیت سفارش <span id="track-result-id"></span></h3>
+
+        <div class="track-timeline" id="track-timeline"></div>
+
+        <p class="track-tracking-code" id="track-code-wrap" hidden>
+            کد رهگیری پستی: <strong id="track-code"></strong>
+        </p>
+    </div>
+
+</div>
+</section>
+
+
+<div id="site-footer"></div>
+
+
+<script src="js/partials.js"></script>
+
+<script src="js/products.js"></script>
+
+<script src="js/cart.js"></script>
+
+<script src="js/wishlist.js"></script>
+
+<script src="js/mobile-menu.js"></script>
+
+<script src="js/track-order.js"></script>
+
+</body>
+</html>

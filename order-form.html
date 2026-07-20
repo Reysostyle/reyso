@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>ReySo | ثبت درخواست سفارش</title>
+
+
+    <!-- Favicon -->
+
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+
+    <!-- Font (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/fonts.css">
+
+
+    <!-- Icons (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/remixicon.css">
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/responsive.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="background-glow"></div>
+<div class="background-glow-soft"></div>
+<div class="background-line"></div>
+
+
+<!-- ======================
+        HEADER
+====================== -->
+
+
+<div id="site-header"></div>
+
+
+<!-- ======================
+      ORDER REQUEST FORM
+====================== -->
+
+<section class="order-form-section">
+<div class="container">
+
+    <p class="pd-crumbs"><a href="index.html">خانه</a> / <a href="cart.html">سبد خرید</a> / <span>ثبت سفارش</span></p>
+
+    <h1 class="cart-title">ثبت درخواست سفارش</h1>
+
+    <p class="order-form-intro">
+        درگاه پرداخت آنلاین به‌زودی فعال می‌شه. تا اون‌موقع، فرم زیر رو پر کن تا سفارشت ثبت بشه؛
+        هماهنگی پرداخت از طریق تلگرام انجام می‌شه و از همون‌جا هم مراحل بعدی سفارشت
+        (تایید پرداخت، شروع تولید، آماده‌سازی و ارسال) رو بهت اطلاع می‌دیم.
+    </p>
+
+    <div class="order-form-layout" id="order-form-layout">
+
+        <form class="order-form" id="order-form" novalidate>
+            <h3>اطلاعات سفارش</h3>
+            <p class="order-form-section-label">همه فیلدها به‌جز یادداشت اجباری هستن</p>
+
+            <div class="order-field-row">
+                <div class="contact-field">
+                    <label for="of-name">نام و نام‌خانوادگی</label>
+                    <input type="text" id="of-name" placeholder="مثلاً سارا محمدی" required>
+                </div>
+
+                <div class="contact-field">
+                    <label for="of-phone">شماره تماس</label>
+                    <input type="tel" id="of-phone" placeholder="09xxxxxxxxx" required>
+                </div>
+            </div>
+
+            <div class="contact-field">
+                <label for="of-telegram">یوزرنیم تلگرام</label>
+                <input type="text" id="of-telegram" placeholder="مثلاً sara_m@" required>
+                <p class="order-telegram-hint">
+                    برای دریافت پیام‌های وضعیت سفارش، لطفاً قبل از ثبت فرم
+                    <a href="#" id="of-bot-link" target="_blank" rel="noopener">ربات تلگرام ریوسو</a>
+                    رو استارت بزن.
+                </p>
+            </div>
+
+            <div class="contact-field">
+                <label for="of-address">آدرس کامل</label>
+                <textarea id="of-address" rows="3" placeholder="استان، شهر، خیابان، پلاک، واحد" required></textarea>
+            </div>
+
+            <div class="order-field-row">
+                <div class="contact-field">
+                    <label for="of-postal">کد پستی</label>
+                    <input type="text" id="of-postal" inputmode="numeric" maxlength="10" placeholder="۱۰ رقمی" required>
+                </div>
+
+                <div class="contact-field">
+                    <label for="of-notes">یادداشت (اختیاری)</label>
+                    <input type="text" id="of-notes" placeholder="توضیح اضافه در مورد سفارش">
+                </div>
+            </div>
+
+            <button type="submit" class="order-submit-btn" id="order-submit-btn">ثبت درخواست سفارش</button>
+            <p class="contact-form-note" id="order-form-note" hidden></p>
+        </form>
+
+        <div class="cart-summary" id="order-summary">
+            <h4>خلاصه سفارش</h4>
+
+            <div class="order-summary-items" id="order-summary-items"></div>
+
+            <div class="cart-summary-divider"></div>
+
+            <div class="cart-summary-row cart-summary-total">
+                <span>مبلغ نهایی</span>
+                <span id="order-total">۰ تومان</span>
+            </div>
+
+            <p class="cart-secure-note">
+                <i class="ri-shield-check-line"></i>
+                پرداخت پس از هماهنگی در تلگرام انجام می‌شه
+            </p>
+        </div>
+
+    </div>
+
+    <div class="order-empty" id="order-empty" hidden>
+        <i class="ri-shopping-bag-3-line"></i>
+        <p>سبد خرید شما خالیه، برای ثبت سفارش اول چند محصول انتخاب کن</p>
+        <a href="shop.html" class="cart-empty-btn">مشاهده محصولات</a>
+    </div>
+
+    <div class="order-success-inline" id="order-success-inline" hidden>
+        <i class="ri-checkbox-circle-line"></i>
+        <p>درخواست سفارش شما ثبت شد. کد سفارش: <strong id="order-success-inline-id"></strong></p>
+    </div>
+
+</div>
+</section>
+
+
+<div id="site-footer"></div>
+
+
+<script src="js/partials.js"></script>
+
+<script src="js/products.js"></script>
+
+<script src="js/cart.js"></script>
+
+<script src="js/wishlist.js"></script>
+
+<script src="js/mobile-menu.js"></script>
+
+<script src="js/order-form.js"></script>
+
+</body>
+</html>

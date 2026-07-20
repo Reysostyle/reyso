@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>ReySo | محصولات</title>
+
+
+    <!-- Favicon -->
+
+    <link rel="icon" href="images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+
+
+    <!-- Font (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/fonts.css">
+
+
+    <!-- Icons (self-hosted, no external CDN) -->
+
+    <link rel="stylesheet" href="css/remixicon.css">
+
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/responsive.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="background-glow"></div>
+<div class="background-glow-soft"></div>
+<div class="background-line"></div>
+
+
+
+<!-- ======================
+        HEADER
+====================== -->
+
+
+<div id="site-header"></div>
+
+
+<!-- ======================
+      SHOP / PRODUCT LISTING
+====================== -->
+
+<section class="shop-section">
+<div class="container">
+
+    <p class="pd-crumbs"><a href="index.html">خانه</a> / <span>محصولات</span></p>
+
+    <div class="shop-layout">
+
+        <aside class="shop-filters" id="shop-filters">
+
+            <div class="shop-filters-head">
+                <h4>فیلترها</h4>
+                <button class="filters-clear" id="filters-clear">پاک کردن</button>
+                <button class="shop-filters-close" id="shop-filters-close" aria-label="بستن فیلترها">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+
+            <div class="filter-group">
+                <p class="filter-title">دسته‌بندی</p>
+                <div class="filter-check-list" id="filter-categories"></div>
+            </div>
+
+            <div class="filter-group">
+                <p class="filter-title">محدوده قیمت</p>
+                <input type="range" class="filter-range" id="filter-price" min="1000000" max="5000000" step="50000" value="5000000">
+                <div class="filter-range-labels">
+                    <span>از ۱٬۰۰۰٬۰۰۰</span>
+                    <span id="filter-price-value">تا ۵٬۰۰۰٬۰۰۰</span>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <p class="filter-title">سایز</p>
+                <div class="filter-pills" id="filter-sizes"></div>
+            </div>
+
+            <div class="filter-group">
+                <p class="filter-title">رنگ</p>
+                <div class="filter-swatches" id="filter-colors"></div>
+            </div>
+
+        </aside>
+
+        <div class="shop-main">
+
+            <div class="shop-toolbar">
+
+                <p class="shop-count" id="shop-count"></p>
+
+                <div class="shop-toolbar-actions">
+
+                    <div class="shop-view-toggle">
+                        <button class="active" data-view="grid" aria-label="نمایش شبکه‌ای">
+                            <i class="ri-grid-fill"></i>
+                        </button>
+                        <button data-view="list" aria-label="نمایش لیستی">
+                            <i class="ri-list-check-2"></i>
+                        </button>
+                    </div>
+
+                    <div class="shop-sort-wrap">
+                        <select class="shop-sort" id="shop-sort">
+                            <option value="newest">جدیدترین</option>
+                            <option value="popular">پرطرفدارترین</option>
+                            <option value="price-asc">ارزان‌ترین</option>
+                            <option value="price-desc">گران‌ترین</option>
+                        </select>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+
+                    <button class="mobile-filters-btn" id="mobile-filters-btn">
+                        <i class="ri-equalizer-line"></i> فیلترها
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="active-filters" id="active-filters"></div>
+
+            <div class="product-grid shop-grid" id="shop-grid"></div>
+
+            <p class="shop-empty" id="shop-empty" hidden>
+                محصولی با این فیلترها پیدا نشد. فیلترها رو تغییر بده یا پاک کن.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+<div class="shop-filters-backdrop" id="shop-filters-backdrop"></div>
+
+
+<div id="site-footer"></div>
+
+
+<script src="js/partials.js"></script>
+
+<script src="js/products.js"></script>
+
+<script src="js/shop.js"></script>
+
+<script src="js/wishlist.js"></script>
+
+<script src="js/cart.js"></script>
+
+<script src="js/mobile-menu.js"></script>
+
+</body>
+</html>
