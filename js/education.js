@@ -40,7 +40,7 @@ function eduCreateCard(lesson) {
     card.className = "edu-card";
     card.innerHTML =
         '<div class="edu-card-media">' +
-        '<img src="' + lesson.thumbnail + '" alt="' + lesson.title + '">' +
+        '<img loading="lazy" src="' + lesson.thumbnail + '" alt="' + lesson.title + '">' +
         '<span class="edu-play-btn"><i class="ri-play-fill"></i></span>' +
         '<span class="edu-duration">' + lesson.duration + "</span>" +
         "</div>" +

@@ -120,7 +120,7 @@ function cartLineCard(line, index) {
     card.className = "cart-item";
 
     card.innerHTML =
-        '<img src="' + line.image + '" alt="' + line.name + '">' +
+        '<img loading="lazy" src="' + line.image + '" alt="' + line.name + '">' +
         '<div class="cart-item-info">' +
         '<p class="cart-item-name">' + line.name + "</p>" +
         '<p class="cart-item-meta">سایز: ' + line.size + " &nbsp;|&nbsp; رنگ: " + line.color + "</p>" +

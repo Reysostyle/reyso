@@ -172,8 +172,8 @@ function shopCreateCard(product) {
         '<i class="ri-heart-line"></i></button>' +
         '<a href="shop-details.html?id=' + product.id + '" class="product-link">' +
         '<div class="product-media">' +
-        '<img class="img-front" src="' + front + '" alt="' + product.name + '">' +
-        '<img class="img-back" src="' + back + '" alt="' + product.name + '">' +
+        '<img class="img-front" loading="lazy" src="' + front + '" alt="' + product.name + '">' +
+        '<img class="img-back" loading="lazy" src="' + back + '" alt="' + product.name + '">' +
         (product.oldPrice ? '<span class="shop-card-badge">تخفیف</span>' : "") +
         "</div>" +
         '<div class="product-info">' +
