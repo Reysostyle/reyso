@@ -344,6 +344,11 @@
     }
 
     .cart{
+        padding: 10px 4px;
+        gap: 0;
+    }
+
+    .cart-label{
         display: none;
     }
 
