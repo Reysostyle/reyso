@@ -571,6 +571,10 @@ body.menu-open{
     overflow: hidden;
 }
 
+.mobile-menu{
+    overscroll-behavior: contain;
+}
+
 .mobile-menu-head{
     display: flex;
     align-items: center;
