@@ -81,6 +81,32 @@ function renderWishlistNav(){
             li.appendChild(span);
         }
 
+        const addBtn = document.createElement("button");
+        addBtn.setAttribute("aria-label", "افزودن به سبد خرید");
+        addBtn.title = "افزودن به سبد خرید";
+        addBtn.innerHTML = '<i class="ri-shopping-bag-line"></i>';
+        if (product) {
+            addBtn.addEventListener("click", () => {
+                const size = product.sizes[0];
+                const color = product.colors[0];
+                const cartItem = {
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: color.image,
+                    size: size,
+                    color: color.name,
+                    qty: 1
+                };
+                addToCart(cartItem);
+                if (typeof showCartToast === "function") showCartToast(cartItem);
+                closeWishlistPanel();
+            });
+        } else {
+            addBtn.disabled = true;
+        }
+        li.appendChild(addBtn);
+
         const removeBtn = document.createElement("button");
         removeBtn.setAttribute("aria-label", "حذف از علاقه‌مندی‌ها");
         removeBtn.innerHTML = '<i class="ri-close-line"></i>';

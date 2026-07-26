@@ -45,6 +45,8 @@ function initShopDetails() {
     if (nameEl) nameEl.textContent = product.name;
     if (descEl) descEl.textContent = product.description;
 
+    if (typeof trackProductView === "function") trackProductView(product.id);
+
     if (starsEl) {
         const full = "★".repeat(product.rating);
         const empty = "☆".repeat(5 - product.rating);
@@ -69,6 +71,8 @@ function initShopDetails() {
         document.querySelectorAll(".pd-thumbs button").forEach((btn) => {
             btn.classList.toggle("active", btn.dataset.src === src);
         });
+        const stickyImg = document.getElementById("pd-sticky-img");
+        if (stickyImg) stickyImg.src = src;
     }
 
     function renderThumbs() {
@@ -155,6 +159,96 @@ function initShopDetails() {
     if (wishBtn) {
         wishBtn.dataset.id = product.name;
     }
+
+    initGalleryZoom();
+    initStickyBar(product, addBtn);
 }
+
+function initGalleryZoom() {
+    const wrap = document.getElementById("pd-gallery-main");
+    const img = document.getElementById("pd-main-image");
+    if (!wrap || !img) return;
+
+    wrap.addEventListener("mousemove", (e) => {
+        const rect = wrap.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        img.style.transformOrigin = x + "% " + y + "%";
+        wrap.classList.add("zoomed");
+    });
+
+    wrap.addEventListener("mouseleave", () => {
+        wrap.classList.remove("zoomed");
+        img.style.transformOrigin = "center center";
+    });
+}
+
+function initSizeGuide() {
+    const btn = document.getElementById("pd-size-guide-btn");
+    if (!btn || typeof SIZE_GUIDE === "undefined") return;
+
+    function closeSizeGuide() {
+        const modal = document.getElementById("size-guide-modal");
+        if (modal) modal.classList.remove("open");
+    }
+
+    function buildModal() {
+        if (document.getElementById("size-guide-modal")) return;
+
+        const rows = SIZE_GUIDE.map((row) =>
+            "<tr><td>" + row.size + "</td><td>" + row.bust + "</td><td>" + row.waist + "</td><td>" + row.hip + "</td></tr>"
+        ).join("");
+
+        const modal = document.createElement("div");
+        modal.className = "qv-modal";
+        modal.id = "size-guide-modal";
+        modal.innerHTML =
+            '<div class="qv-backdrop"></div>' +
+            '<div class="qv-box sg-box">' +
+                '<button type="button" class="qv-close" aria-label="بستن"><i class="ri-close-line"></i></button>' +
+                '<div class="sg-content">' +
+                    "<h3>راهنمای سایز</h3>" +
+                    '<p class="sg-note">اندازه‌ها بر حسب سانتی‌متر و بر اساس دور بدن است؛ در صورت بین دو سایز بودن، سایز بزرگ‌تر رو انتخاب کن.</p>' +
+                    '<table class="sg-table">' +
+                        "<thead><tr><th>سایز</th><th>دور سینه</th><th>دور کمر</th><th>دور باسن</th></tr></thead>" +
+                        "<tbody>" + rows + "</tbody>" +
+                    "</table>" +
+                "</div>" +
+            "</div>";
+
+        document.body.appendChild(modal);
+        modal.querySelector(".qv-backdrop").addEventListener("click", closeSizeGuide);
+        modal.querySelector(".qv-close").addEventListener("click", closeSizeGuide);
+    }
+
+    btn.addEventListener("click", () => {
+        buildModal();
+        document.getElementById("size-guide-modal").classList.add("open");
+    });
+}
+
+function initStickyBar(product, addBtn) {
+    const bar = document.getElementById("pd-sticky-bar");
+    const stickyAddBtn = document.getElementById("pd-sticky-add-btn");
+    if (!bar || !addBtn || !stickyAddBtn || typeof IntersectionObserver === "undefined") return;
+
+    document.getElementById("pd-sticky-name").textContent = product.name;
+    document.getElementById("pd-sticky-price").textContent = formatToman(product.price);
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                const scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+                bar.classList.toggle("visible", scrolledPast);
+            });
+        },
+        { threshold: 0 }
+    );
+    observer.observe(addBtn);
+
+    stickyAddBtn.addEventListener("click", () => addBtn.click());
+}
+
+document.addEventListener("DOMContentLoaded", initSizeGuide);
 
 document.addEventListener("DOMContentLoaded", initShopDetails);

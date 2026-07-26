@@ -14,16 +14,59 @@
    the person sees an honest note that the backend isn't
    connected yet. */
 
-const ORDER_WEBHOOK_URL = ""; // e.g. "https://your-n8n-host/webhook/reyso-order"
+const ORDER_API_URL = ""; // e.g. "https://admin.reyso.style/api/orders"
 const TELEGRAM_BOT_USERNAME = ""; // e.g. "reyso_orders_bot" (without @)
 
 const PENDING_ORDERS_KEY = "reyso_pending_orders";
 const LAST_ORDER_ID_KEY = "reyso_last_order_id";
+const CUSTOMER_INFO_KEY = "reyso_customer_info";
 
-function telegramBotLink() {
-    return TELEGRAM_BOT_USERNAME
-        ? "https://t.me/" + TELEGRAM_BOT_USERNAME
-        : "https://telegram.org";
+function loadSavedCustomerInfo() {
+    try {
+        const raw = localStorage.getItem(CUSTOMER_INFO_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+function saveCustomerInfo(fields) {
+    try {
+        localStorage.setItem(CUSTOMER_INFO_KEY, JSON.stringify({
+            name: fields.name,
+            phone: fields.phone,
+            telegram: fields.telegram,
+            address: fields.address,
+            postal: fields.postal,
+        }));
+    } catch (e) {
+        // localStorage unavailable — fail silently, form just won't prefill next time
+    }
+}
+
+function prefillCustomerInfo() {
+    const saved = loadSavedCustomerInfo();
+    if (!saved) return;
+
+    const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val) el.value = val;
+    };
+
+    setVal("of-name", saved.name);
+    setVal("of-phone", saved.phone);
+    setVal("of-telegram", saved.telegram);
+    setVal("of-address", saved.address);
+    setVal("of-postal", saved.postal);
+}
+
+// Deep link with the customer's phone as the /start payload, so the
+// backend's Telegram webhook can link their chat to their order
+// automatically the moment they press Start.
+function telegramBotLink(phoneDigits) {
+    if (!TELEGRAM_BOT_USERNAME) return "https://telegram.org";
+    const base = "https://t.me/" + TELEGRAM_BOT_USERNAME;
+    return phoneDigits ? base + "?start=" + phoneDigits : base;
 }
 
 function generateOrderId() {
@@ -91,25 +134,28 @@ function savePendingOrderLocally(order) {
     }
 }
 
-async function sendOrderToWebhook(order) {
-    if (!ORDER_WEBHOOK_URL) {
-        // Backend not connected yet — keep the order safe locally.
+async function sendOrderToBackend(order) {
+    if (!ORDER_API_URL) {
+        // Backend not connected yet — keep the order safe locally,
+        // and fall back to a client-generated ID so the person still
+        // gets a success screen.
         savePendingOrderLocally(order);
-        return { delivered: false };
+        return { delivered: false, orderId: generateOrderId() };
     }
 
     try {
-        const res = await fetch(ORDER_WEBHOOK_URL, {
+        const res = await fetch(ORDER_API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(order),
         });
         if (!res.ok) throw new Error("bad status " + res.status);
-        return { delivered: true };
+        const data = await res.json();
+        return { delivered: true, orderId: data.orderId };
     } catch (e) {
-        // Network/webhook failure — don't lose the order.
+        // Network/backend failure — don't lose the order.
         savePendingOrderLocally(order);
-        return { delivered: false };
+        return { delivered: false, orderId: generateOrderId() };
     }
 }
 
@@ -208,10 +254,10 @@ function showOrderSuccessModal(orderId, botLink, delivered) {
 
 document.addEventListener("DOMContentLoaded", () => {
     renderOrderSummary();
+    prefillCustomerInfo();
 
-    const botLink = telegramBotLink();
     const headerBotLink = document.getElementById("of-bot-link");
-    if (headerBotLink) headerBotLink.href = botLink;
+    if (headerBotLink) headerBotLink.href = telegramBotLink();
 
     const form = document.getElementById("order-form");
     const submitBtn = document.getElementById("order-submit-btn");
@@ -242,9 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const orderId = generateOrderId();
         const order = {
-            orderId: orderId,
             createdAt: new Date().toISOString(),
             customer: fields,
             items: cart,
@@ -252,9 +296,15 @@ document.addEventListener("DOMContentLoaded", () => {
             total: cartSubtotal(),
         };
 
+        saveCustomerInfo(fields);
+
         setFormBusy(submitBtn, true);
-        const result = await sendOrderToWebhook(order);
+        const result = await sendOrderToBackend(order);
         setFormBusy(submitBtn, false);
+
+        const orderId = result.orderId;
+        const phoneDigits = fields.phone.replace(/[^0-9]/g, "");
+        const botLink = telegramBotLink(phoneDigits);
 
         localStorage.setItem(LAST_ORDER_ID_KEY, orderId);
         saveCart([]); // clear cart now that the order request is placed

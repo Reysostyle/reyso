@@ -81,7 +81,6 @@ body{
     font-family: var(--font-display);
     background: var(--cream);
     color: var(--text);
-    overflow-x: hidden;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
 }
@@ -181,6 +180,15 @@ em, i.brand-emphasis{
 
 header{
     padding: 16px 0;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition: padding var(--t-medium);
+}
+
+header.scrolled{
+    padding: 8px 0;
 }
 
 .nav{
@@ -193,6 +201,11 @@ header{
     padding: 0 20px 0 34px;
     color: var(--white);
     box-shadow: var(--shadow-lg);
+    transition: height var(--t-medium);
+}
+
+header.scrolled .nav{
+    height: 54px;
 }
 
 /* ---------- Logo ---------- */
@@ -222,6 +235,11 @@ header{
     display: block;
     height: 32px;
     width: auto;
+    transition: height var(--t-medium);
+}
+
+header.scrolled .logo img{
+    height: 26px;
 }
 
 /* ---------- Menu ---------- */
@@ -1301,6 +1319,39 @@ body.menu-open{
     100%{ transform: scale(1); }
 }
 
+/* ---------- Quick view button ---------- */
+
+.quick-view-btn{
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(247,243,234,.9);
+    color: var(--deep-green);
+    font-size: 17px;
+    transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+
+.quick-view-btn:hover{
+    background: var(--gold);
+    color: var(--deep-green-700);
+    transform: scale(1.08);
+}
+
+.quick-view-btn i{
+    pointer-events: none;
+}
+
+.shop-grid-list .quick-view-btn{
+    display: none;
+}
+
 /* ---------- Card link wrapper ---------- */
 
 .product-link{
@@ -1731,6 +1782,41 @@ body.menu-open{
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform .2s ease;
+    cursor: zoom-in;
+}
+
+.pd-gallery-main.zoomed img{
+    transform: scale(1.9);
+    cursor: zoom-out;
+}
+
+.pd-zoom-hint{
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(15,25,20,.55);
+    color: var(--cream);
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: var(--r-full);
+    pointer-events: none;
+    opacity: .9;
+    transition: opacity var(--t-fast);
+    z-index: 2;
+}
+
+.pd-gallery-main.zoomed .pd-zoom-hint{
+    opacity: 0;
+}
+
+@media (max-width: 900px){
+    .pd-zoom-hint{
+        display: none;
+    }
 }
 
 .pd-thumbs{
@@ -1823,11 +1909,35 @@ body.menu-open{
     margin-bottom: 28px;
 }
 
-.pd-block > p{
+.pd-block > p,
+.pd-block-head p{
     font-size: 13.5px;
     font-weight: 600;
     color: var(--deep-green);
     margin-bottom: 12px;
+}
+
+.pd-block-head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pd-block-head p{
+    margin-bottom: 12px;
+}
+
+.pd-size-guide-btn{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-mute);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--t-fast);
+}
+
+.pd-size-guide-btn:hover{
+    color: var(--gold);
 }
 
 .pd-options{
@@ -4049,4 +4159,337 @@ body.menu-open{
         width: 78px;
         height: 98px;
     }
+}
+
+
+/* =====================================================
+   QUICK VIEW MODAL
+===================================================== */
+
+.qv-modal{
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--t-medium, .35s ease);
+}
+
+.qv-modal.open{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.qv-backdrop{
+    position: absolute;
+    inset: 0;
+    background: rgba(15,25,20,.65);
+}
+
+.qv-box{
+    position: relative;
+    background: var(--cream);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    width: 100%;
+    max-width: 920px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+}
+
+.qv-close{
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15,25,20,.55);
+    color: var(--cream);
+    border-radius: 50%;
+    font-size: 20px;
+    z-index: 3;
+    transition: background var(--t-fast), color var(--t-fast);
+}
+
+.qv-close:hover{
+    background: var(--gold);
+    color: var(--deep-green-700);
+}
+
+.qv-content{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.qv-media{
+    position: relative;
+    aspect-ratio: 4 / 4.8;
+    background: var(--cream-600);
+}
+
+.qv-media img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.qv-info{
+    padding: 36px 34px;
+}
+
+.qv-info h3{
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--deep-green);
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.qv-desc{
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--text-soft);
+    margin-bottom: 24px;
+}
+
+.qv-full-link{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-mute);
+    transition: color var(--t-fast);
+}
+
+.qv-full-link:hover{
+    color: var(--deep-green);
+}
+
+@media (max-width: 768px){
+    .qv-content{
+        grid-template-columns: 1fr;
+    }
+    .qv-media{
+        aspect-ratio: 4 / 3.4;
+    }
+    .qv-info{
+        padding: 28px 22px 30px;
+    }
+}
+
+
+/* =====================================================
+   SIZE GUIDE MODAL
+   (reuses .qv-modal / .qv-backdrop / .qv-box / .qv-close)
+===================================================== */
+
+.sg-box{
+    max-width: 480px;
+}
+
+.sg-content{
+    padding: 36px 30px;
+}
+
+.sg-content h3{
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--deep-green);
+    margin-bottom: 8px;
+}
+
+.sg-note{
+    font-size: 12.5px;
+    color: var(--text-soft);
+    line-height: 1.8;
+    margin-bottom: 22px;
+}
+
+.sg-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.sg-table th,
+.sg-table td{
+    padding: 10px 6px;
+    text-align: center;
+    border-bottom: 1px solid var(--line-gold);
+    color: var(--text-soft);
+}
+
+.sg-table th{
+    color: var(--deep-green);
+    font-weight: 700;
+    font-size: 12.5px;
+}
+
+.sg-table tr:last-child td{
+    border-bottom: none;
+}
+
+
+/* =====================================================
+   STICKY ADD-TO-CART BAR (product detail, mobile/tablet)
+===================================================== */
+
+.pd-sticky-bar{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 250;
+    background: var(--cream);
+    box-shadow: 0 -8px 26px rgba(15,25,20,.14);
+    padding: 12px 16px;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    transform: translateY(100%);
+    transition: transform var(--t-medium);
+}
+
+.pd-sticky-bar.visible{
+    display: flex;
+    transform: translateY(0);
+}
+
+.pd-sticky-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.pd-sticky-info img{
+    width: 44px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.pd-sticky-name{
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--deep-green);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+}
+
+.pd-sticky-price{
+    font-size: 12px;
+    color: var(--gold);
+}
+
+.pd-sticky-bar .pd-add-btn{
+    flex: none;
+    width: auto;
+    padding: 12px 24px;
+    font-size: 13px;
+}
+
+@media (min-width: 901px){
+    .pd-sticky-bar{
+        display: none !important;
+    }
+}
+
+
+/* =====================================================
+   FLOATING WHATSAPP / TELEGRAM WIDGET
+===================================================== */
+
+.floating-contact{
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+    z-index: 400;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.floating-contact-btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--t-fast);
+}
+
+.floating-contact-btn:hover{
+    transform: scale(1.08);
+}
+
+.floating-contact-btn.wa{
+    background: #25D366;
+}
+
+.floating-contact-btn.tg{
+    background: #29A9EA;
+}
+
+@media (max-width: 768px){
+    .floating-contact{
+        left: 14px;
+        bottom: 84px;
+    }
+    .floating-contact-btn{
+        width: 46px;
+        height: 46px;
+        font-size: 21px;
+    }
+}
+
+body.qv-open .floating-contact,
+body.menu-open .floating-contact{
+    display: none;
+}
+
+
+/* ---------- Product page trust badges ---------- */
+
+.pd-trust{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-gold);
+}
+
+.pd-trust li{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    color: var(--text-soft);
+}
+
+.pd-trust li i{
+    color: var(--gold);
+    font-size: 16px;
 }

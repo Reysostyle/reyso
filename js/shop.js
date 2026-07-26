@@ -170,6 +170,8 @@ function shopCreateCard(product) {
     card.innerHTML =
         '<button class="wishlist-btn" data-id="' + product.name + '" aria-label="افزودن به علاقه‌مندی‌ها">' +
         '<i class="ri-heart-line"></i></button>' +
+        '<button class="quick-view-btn" aria-label="مشاهده سریع">' +
+        '<i class="ri-eye-line"></i></button>' +
         '<a href="shop-details.html?id=' + product.id + '" class="product-link">' +
         '<div class="product-media">' +
         '<img class="img-front" loading="lazy" src="' + front + '" alt="' + product.name + '">' +

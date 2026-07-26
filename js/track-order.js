@@ -11,7 +11,7 @@
    that accepts ?orderId=... and returns
    { found: true, status: { payment, production, trackingCode } } */
 
-const TRACK_LOOKUP_URL = ""; // e.g. "https://your-n8n-host/webhook/reyso-order-status"
+const TRACK_LOOKUP_URL = ""; // e.g. "https://admin.reyso.style/api/orders" (order ID gets appended to this)
 
 const PRODUCTION_STEPS = [
     { key: "registered", label: "ثبت شده" },
@@ -48,7 +48,7 @@ function renderTimeline(currentKey) {
 
 async function lookupOrder(orderId) {
     const res = await fetch(
-        TRACK_LOOKUP_URL + "?orderId=" + encodeURIComponent(orderId)
+        TRACK_LOOKUP_URL + "/" + encodeURIComponent(orderId)
     );
     if (!res.ok) throw new Error("bad status " + res.status);
     return res.json();

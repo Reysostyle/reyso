@@ -126,3 +126,14 @@ function getProductById(id) {
 function formatToman(amount) {
     return amount.toLocaleString("fa-IR") + " تومان";
 }
+
+/* Size guide (cm). Placeholder measurements — replace with
+   ReySo's real measurements whenever they're ready; every
+   product currently shares this table. */
+const SIZE_GUIDE = [
+    { size: "36", bust: 84, waist: 66, hip: 90 },
+    { size: "38", bust: 88, waist: 70, hip: 94 },
+    { size: "40", bust: 92, waist: 74, hip: 98 },
+    { size: "42", bust: 96, waist: 78, hip: 102 },
+    { size: "44", bust: 100, waist: 82, hip: 106 }
+];
