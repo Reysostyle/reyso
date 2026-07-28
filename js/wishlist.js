@@ -141,17 +141,23 @@ function closeWishlistPanel(){
 
 function initWishlistNav(){
     renderWishlistNav();
-
-    document.querySelectorAll(".wishlist-nav-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            openWishlistPanel();
-        });
-    });
-
-    document.querySelector(".wishlist-backdrop")?.addEventListener("click", closeWishlistPanel);
-    document.querySelector(".wishlist-panel-close")?.addEventListener("click", closeWishlistPanel);
 }
+
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".wishlist-nav-btn")) {
+        e.preventDefault();
+        openWishlistPanel();
+        return;
+    }
+    if (e.target.closest(".wishlist-backdrop")) {
+        closeWishlistPanel();
+        return;
+    }
+    if (e.target.closest(".wishlist-panel-close")) {
+        closeWishlistPanel();
+        return;
+    }
+});
 
 function bindWishlistButton(btn){
     if (btn.dataset.wishlistBound === "true") return;
