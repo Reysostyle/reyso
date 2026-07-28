@@ -19,7 +19,8 @@ function initShopDetails() {
         return;
     }
 
-    let selectedSize = product.sizes[0];
+    const soldOutSizes = product.soldOutSizes || [];
+    let selectedSize = product.sizes.find((s) => !soldOutSizes.includes(s)) || product.sizes[0];
     let selectedColor = product.colors[0];
     let qty = 1;
 
@@ -90,15 +91,21 @@ function initShopDetails() {
     function renderSizes() {
         sizesWrap.innerHTML = "";
         product.sizes.forEach((size) => {
+            const isSoldOut = soldOutSizes.includes(size);
             const btn = document.createElement("button");
             btn.type = "button";
-            btn.className = "pd-size-btn" + (size === selectedSize ? " active" : "");
+            btn.className = "pd-size-btn" + (size === selectedSize ? " active" : "") + (isSoldOut ? " sold-out" : "");
             btn.textContent = size;
-            btn.addEventListener("click", () => {
-                selectedSize = size;
-                sizesWrap.querySelectorAll(".pd-size-btn").forEach((b) => b.classList.remove("active"));
-                btn.classList.add("active");
-            });
+            if (isSoldOut) {
+                btn.disabled = true;
+                btn.title = "این سایز ناموجود است";
+            } else {
+                btn.addEventListener("click", () => {
+                    selectedSize = size;
+                    sizesWrap.querySelectorAll(".pd-size-btn").forEach((b) => b.classList.remove("active"));
+                    btn.classList.add("active");
+                });
+            }
             sizesWrap.appendChild(btn);
         });
     }

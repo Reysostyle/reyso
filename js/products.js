@@ -20,6 +20,7 @@ const PRODUCTS = [
         description: "طراحی‌شده با پارچه ابریشم درجه‌یک و دوخت دست؛ رنگ کرم ملایمش برای استفاده روزانه و مجالس نیمه‌رسمی هر دو مناسبه.",
         images: ["images/hero1.jpg", "images/hero2.jpg", "images/hero3.jpg", "images/hero4.jpg"],
         sizes: ["36", "38", "40", "42", "44"],
+        soldOutSizes: [], // e.g. ["36", "44"] — mark a size sold out by adding it here
         colors: [
             { name: "کرم", hex: "#E8DFC8", image: "images/hero1.jpg" },
             { name: "سبز تیره", hex: "#1C4436", image: "images/hero2.jpg" },
@@ -39,6 +40,7 @@ const PRODUCTS = [
         description: "پیراهن مجلسی با برش اصولی و پارچه‌ای که به‌آرامی روی بدن می‌افته؛ انتخابی شیک برای مهمانی‌های رسمی.",
         images: ["images/hero2.jpg", "images/hero3.jpg", "images/hero4.jpg", "images/hero5.jpg"],
         sizes: ["36", "38", "40", "42", "44"],
+        soldOutSizes: [], // e.g. ["36", "44"] — mark a size sold out by adding it here
         colors: [
             { name: "زرشکی", hex: "#7B1E3D", image: "images/hero2.jpg" },
             { name: "مشکی", hex: "#2B2B2B", image: "images/hero3.jpg" }
@@ -57,6 +59,7 @@ const PRODUCTS = [
         description: "ست کت‌وشلوار کلاسیک با برش راسته و پارچه بژ لطیف؛ برای محیط کاری و مناسبت‌های رسمی مناسبه.",
         images: ["images/hero3.jpg", "images/hero4.jpg", "images/hero5.jpg", "images/hero6.jpg"],
         sizes: ["36", "38", "40", "42", "44"],
+        soldOutSizes: [], // e.g. ["36", "44"] — mark a size sold out by adding it here
         colors: [
             { name: "بژ", hex: "#D8C9AE", image: "images/hero3.jpg" },
             { name: "سبز تیره", hex: "#1C4436", image: "images/hero4.jpg" },
@@ -76,6 +79,7 @@ const PRODUCTS = [
         description: "شومیز سبک و خنک با پارچه ابریشمی و رنگ سبز آرام؛ برای ست کردن با شلوار یا دامن، هر دو خوش می‌شینه.",
         images: ["images/hero4.jpg", "images/hero5.jpg", "images/hero6.jpg", "images/hero1.jpg"],
         sizes: ["36", "38", "40", "42", "44"],
+        soldOutSizes: [], // e.g. ["36", "44"] — mark a size sold out by adding it here
         colors: [
             { name: "سبز", hex: "#3F5C48", image: "images/hero4.jpg" },
             { name: "کرم", hex: "#E8DFC8", image: "images/hero5.jpg" }
@@ -94,6 +98,7 @@ const PRODUCTS = [
         description: "پالتو پشمی گرم با رنگ زیتونی؛ برای فصل سرد، هم گرمای لازم رو می‌ده، هم ظاهر مرتبی داره.",
         images: ["images/hero5.jpg", "images/hero6.jpg", "images/hero1.jpg", "images/hero2.jpg"],
         sizes: ["36", "38", "40", "42", "44"],
+        soldOutSizes: [], // e.g. ["36", "44"] — mark a size sold out by adding it here
         colors: [
             { name: "زیتونی", hex: "#6B7A4A", image: "images/hero5.jpg" },
             { name: "خاکی", hex: "#A79373", image: "images/hero6.jpg" }
@@ -112,6 +117,7 @@ const PRODUCTS = [
         description: "مانتو لینن سبک با رنگ خاکی؛ انتخابی راحت و خنک برای روزهای گرم سال.",
         images: ["images/hero6.jpg", "images/hero1.jpg", "images/hero2.jpg", "images/hero3.jpg"],
         sizes: ["36", "38", "40", "42", "44"],
+        soldOutSizes: [], // e.g. ["36", "44"] — mark a size sold out by adding it here
         colors: [
             { name: "خاکی", hex: "#A79373", image: "images/hero6.jpg" },
             { name: "کرم", hex: "#E8DFC8", image: "images/hero1.jpg" }

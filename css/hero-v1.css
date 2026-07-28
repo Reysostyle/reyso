@@ -1,0 +1,163 @@
+/* =====================================================
+   HERO VARIANT 1 — "ATELIER FADE"
+   Full-bleed single-image crossfade with a slow Ken Burns
+   drift. Text sits on a soft scrim over the photograph
+   instead of beside it. The progress indicator is a row of
+   thin ticks (like a tailor's tape measure) rather than dots.
+===================================================== */
+
+.hero-v1{
+    position: relative;
+    min-height: calc(100vh - 96px);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    border-radius: var(--r-lg);
+    margin-top: 8px;
+}
+
+.hero-v1-slides{
+    position: absolute;
+    inset: 0;
+}
+
+.hero-v1-slide{
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.4s var(--ease-soft);
+}
+
+.hero-v1-slide.active{
+    opacity: 1;
+}
+
+.hero-v1-slide img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    transform: scale(1);
+    animation: heroV1Drift 9s var(--ease-soft) forwards;
+}
+
+@keyframes heroV1Drift{
+    from{ transform: scale(1); }
+    to{ transform: scale(1.07); }
+}
+
+.hero-v1::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15,25,20,.82) 0%, rgba(15,25,20,.35) 42%, rgba(15,25,20,0) 68%);
+    pointer-events: none;
+}
+
+.hero-v1-content{
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 60px 64px;
+    color: var(--cream);
+}
+
+.hero-v1-eyebrow{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    color: var(--gold);
+    margin-bottom: 18px;
+}
+
+.hero-v1-eyebrow .eyebrow-line{
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+}
+
+.hero-v1-content h1{
+    font-family: var(--font-display);
+    font-size: clamp(42px, 6vw, 78px);
+    font-weight: 700;
+    line-height: 1.05;
+    margin-bottom: 18px;
+    max-width: 720px;
+}
+
+.hero-v1-content h1 span{
+    display: block;
+    font-size: .34em;
+    font-weight: 500;
+    color: var(--cream);
+    opacity: .8;
+    margin-top: 10px;
+}
+
+.hero-v1-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: 980px;
+}
+
+.hero-v1-desc{
+    font-size: 15px;
+    line-height: 1.9;
+    color: rgba(247,243,234,.82);
+    max-width: 420px;
+}
+
+.hero-v1-cta{
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex-shrink: 0;
+}
+
+.hero-v1-cta .shop-btn{
+    padding: 18px 40px;
+}
+
+/* Tape-measure progress ticks */
+.hero-v1-ticks{
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    height: 26px;
+}
+
+.hero-v1-tick{
+    width: 1px;
+    height: 10px;
+    background: rgba(247,243,234,.4);
+    transition: height var(--t-fast), background var(--t-fast);
+}
+
+.hero-v1-tick.active{
+    height: 22px;
+    background: var(--gold);
+}
+
+@media (max-width: 900px){
+    .hero-v1{
+        min-height: 640px;
+        align-items: flex-end;
+    }
+    .hero-v1-content{
+        padding: 0 22px 40px;
+    }
+    .hero-v1-row{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .hero-v1-content h1{
+        font-size: clamp(32px, 9vw, 46px);
+    }
+}

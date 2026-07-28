@@ -9,7 +9,7 @@
         <div class="footer-top">
 
             <div class="footer-brand">
-                <a href="#" class="footer-logo">
+                <a href="index.html" class="footer-logo">
                     <img src="images/footer-logo-reyso.png" alt="ReySo Logo">
                 </a>
                 <p class="footer-about">
@@ -35,7 +35,7 @@
                     <li><a href="index.html">خانه</a></li>
                     <li><a href="shop.html">محصولات</a></li>
                     <li><a href="education.html">آموزش</a></li>
-                    <li><a href="#">درباره ما</a></li>
+                    <li><a href="about.html">درباره ما</a></li>
                     <li><a href="track-order.html">پیگیری سفارش</a></li>
                 </ul>
             </div>
@@ -43,11 +43,11 @@
             <div class="footer-col">
                 <h4>دسته‌بندی‌ها</h4>
                 <ul>
-                    <li><a href="#">مانتو</a></li>
-                    <li><a href="#">پالتو</a></li>
-                    <li><a href="#">شومیز</a></li>
-                    <li><a href="#">کت و شلوار</a></li>
-                    <li><a href="#">پیراهن</a></li>
+                    <li><a href="shop.html?category=مانتو">مانتو</a></li>
+                    <li><a href="shop.html?category=پالتو">پالتو</a></li>
+                    <li><a href="shop.html?category=شومیز">شومیز</a></li>
+                    <li><a href="shop.html?category=کت و شلوار">کت و شلوار</a></li>
+                    <li><a href="shop.html?category=پیراهن">پیراهن</a></li>
                 </ul>
             </div>
 
@@ -68,15 +68,15 @@
             به جمع اختصاصی ما بپیوندید و اولین نفری باشید که از
             کالکشن‌های جدید و رازهای استایل باخبر می‌شوید.
         </p>
-        <form class="newsletter-form" onsubmit="return false;">
-            <input type="email" placeholder="ایمیل شما" aria-label="ایمیل">
+        <form class="newsletter-form" id="newsletter-form">
+            <input type="email" id="newsletter-email" placeholder="ایمیل شما" aria-label="ایمیل" required>
             <button type="submit" aria-label="عضویت">عضویت</button>
         </form>
         <label class="newsletter-agree">
-            <input type="checkbox">
+            <input type="checkbox" id="newsletter-agree-check">
             <span>با ثبت فرم، با قوانین و مقررات موافقت می‌کنم</span>
         </label>
-        <span class="newsletter-note">به‌زودی فعال می‌شود</span>
+        <p class="newsletter-note" id="newsletter-note">به‌زودی فعال می‌شود</p>
     </div>
 
 </div>

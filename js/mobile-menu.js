@@ -1,70 +1,65 @@
 /* ==========================
    REYSO MOBILE MENU
-   Opens/closes the slide-in navigation panel. Runs after
-   the header/footer partials are injected (see partials.js)
-   since the menu markup lives inside the header partial.
+   Opens/closes the slide-in navigation panel. Uses event
+   delegation on document (rather than binding directly to
+   the hamburger button) so it keeps working even if the
+   header partial gets swapped in later or re-rendered —
+   there's no stale element reference that can go stale.
 ========================== */
 
-function initMobileMenu(){
-    const menuToggle = document.querySelector(".menu-toggle");
-    const menuClose = document.querySelector(".menu-close");
-    const menuBackdrop = document.querySelector(".mobile-menu-backdrop");
-
-    function isOpen(){
-        return document.body.classList.contains("menu-open");
-    }
-
-    function openMenu(){
-        if (isOpen()) return;
-        document.body.classList.add("menu-open");
-        if (menuToggle) {
-            menuToggle.setAttribute("aria-expanded", "true");
-        }
-    }
-
-    function closeMenu(){
-        if (!isOpen()) return;
-        document.body.classList.remove("menu-open");
-        if (menuToggle) {
-            menuToggle.setAttribute("aria-expanded", "false");
-        }
-    }
-
-    function toggleMenu(){
-        if (isOpen()) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-    }
-
-    if (menuToggle) {
-        menuToggle.addEventListener("click", toggleMenu);
-    }
-
-    if (menuClose) {
-        menuClose.addEventListener("click", closeMenu);
-    }
-
-    if (menuBackdrop) {
-        menuBackdrop.addEventListener("click", closeMenu);
-    }
-
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-            closeMenu();
-        }
-    });
-
-    window.addEventListener("resize", () => {
-        if (window.innerWidth > 768) {
-            closeMenu();
-        }
-    });
-
-    document.querySelectorAll(".mobile-menu-links a").forEach((link) => {
-        link.addEventListener("click", closeMenu);
-    });
+function isMobileMenuOpen(){
+    return document.body.classList.contains("menu-open");
 }
 
-document.addEventListener("partialsReady", initMobileMenu);
+function openMobileMenu(){
+    if (isMobileMenuOpen()) return;
+    document.body.classList.add("menu-open");
+    const toggle = document.querySelector(".menu-toggle");
+    if (toggle) toggle.setAttribute("aria-expanded", "true");
+}
+
+function closeMobileMenu(){
+    if (!isMobileMenuOpen()) return;
+    document.body.classList.remove("menu-open");
+    const toggle = document.querySelector(".menu-toggle");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+}
+
+function toggleMobileMenu(){
+    if (isMobileMenuOpen()) {
+        closeMobileMenu();
+    } else {
+        openMobileMenu();
+    }
+}
+
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".menu-toggle")) {
+        toggleMobileMenu();
+        return;
+    }
+    if (e.target.closest(".menu-close")) {
+        closeMobileMenu();
+        return;
+    }
+    if (e.target.closest(".mobile-menu-backdrop")) {
+        closeMobileMenu();
+        return;
+    }
+    if (e.target.closest(".mobile-menu-links a")) {
+        closeMobileMenu();
+        return;
+    }
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        closeMobileMenu();
+    }
+});
+
+window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+        closeMobileMenu();
+    }
+});

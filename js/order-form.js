@@ -264,6 +264,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const layout = document.getElementById("order-form-layout");
     const successInline = document.getElementById("order-success-inline");
     const successInlineId = document.getElementById("order-success-inline-id");
+    const discountInput = document.getElementById("of-discount");
+    const discountApplyBtn = document.getElementById("order-discount-apply");
+    const discountNote = document.getElementById("order-discount-note");
+
+    if (discountApplyBtn) {
+        discountApplyBtn.addEventListener("click", () => {
+            const code = discountInput.value.trim();
+            if (!discountNote) return;
+            if (!code) {
+                discountNote.textContent = "یه کد وارد کن.";
+            } else {
+                discountNote.textContent = "کد «" + code + "» ثبت شد؛ تیم پشتیبانی موقع هماهنگی در تلگرام اعمالش می‌کنه.";
+            }
+            discountNote.hidden = false;
+        });
+    }
 
     if (!form || !submitBtn) return;
 
@@ -294,6 +310,7 @@ document.addEventListener("DOMContentLoaded", () => {
             items: cart,
             subtotal: cartSubtotal(),
             total: cartSubtotal(),
+            discountCode: discountInput ? discountInput.value.trim() : "",
         };
 
         saveCustomerInfo(fields);

@@ -22,19 +22,19 @@
 
     <!-- Font (self-hosted, no external CDN) -->
 
-    <link rel="stylesheet" href="css/fonts.css?v=21">
+    <link rel="stylesheet" href="css/fonts.css?v=32">
 
 
     <!-- Icons (self-hosted, no external CDN) -->
 
-    <link rel="stylesheet" href="css/remixicon.css?v=21">
+    <link rel="stylesheet" href="css/remixicon.css?v=32">
 
 
     <!-- CSS -->
 
-    <link rel="stylesheet" href="css/style.css?v=21">
+    <link rel="stylesheet" href="css/style.css?v=32">
 
-    <link rel="stylesheet" href="css/responsive.css?v=21">
+    <link rel="stylesheet" href="css/responsive.css?v=32">
 
 
 </head>
@@ -134,10 +134,21 @@
                 <span id="order-total">۰ تومان</span>
             </div>
 
+            <div class="order-discount">
+                <input type="text" id="of-discount" placeholder="کد تخفیف (اختیاری)">
+                <button type="button" id="order-discount-apply">اعمال کد</button>
+            </div>
+            <p class="order-discount-note" id="order-discount-note" hidden></p>
+
             <p class="cart-secure-note">
                 <i class="ri-shield-check-line"></i>
                 پرداخت پس از هماهنگی در تلگرام انجام می‌شه
             </p>
+
+            <div class="order-success-inline" id="order-success-inline" hidden>
+                <i class="ri-checkbox-circle-line"></i>
+                <p>درخواست سفارش شما ثبت شد. کد سفارش: <strong id="order-success-inline-id"></strong></p>
+            </div>
         </div>
 
     </div>
@@ -148,11 +159,6 @@
         <a href="shop.html" class="cart-empty-btn">مشاهده محصولات</a>
     </div>
 
-    <div class="order-success-inline" id="order-success-inline" hidden>
-        <i class="ri-checkbox-circle-line"></i>
-        <p>درخواست سفارش شما ثبت شد. کد سفارش: <strong id="order-success-inline-id"></strong></p>
-    </div>
-
 </div>
 </section>
 
@@ -160,17 +166,17 @@
 <div id="site-footer"></div>
 
 
-<script src="js/partials.js?v=21"></script>
+<script src="js/partials.js?v=32"></script>
 
-<script src="js/products.js?v=21"></script>
+<script src="js/products.js?v=32"></script>
 
-<script src="js/cart.js?v=21"></script>
+<script src="js/cart.js?v=32"></script>
 
-<script src="js/wishlist.js?v=21"></script>
+<script src="js/wishlist.js?v=32"></script>
 
-<script src="js/mobile-menu.js?v=21"></script>
+<script src="js/mobile-menu.js?v=32"></script>
 
-<script src="js/order-form.js?v=21"></script>
+<script src="js/order-form.js?v=32"></script>
 
 </body>
 </html>

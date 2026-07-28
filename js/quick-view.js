@@ -88,16 +88,23 @@ function qvBuildModal() {
 function qvRenderSizes() {
     const wrap = document.getElementById("qv-sizes");
     wrap.innerHTML = "";
+    const soldOutSizes = qvProduct.soldOutSizes || [];
     qvProduct.sizes.forEach((size) => {
+        const isSoldOut = soldOutSizes.includes(size);
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "pd-size-btn" + (size === qvSelectedSize ? " active" : "");
+        btn.className = "pd-size-btn" + (size === qvSelectedSize ? " active" : "") + (isSoldOut ? " sold-out" : "");
         btn.textContent = size;
-        btn.addEventListener("click", () => {
-            qvSelectedSize = size;
-            wrap.querySelectorAll(".pd-size-btn").forEach((b) => b.classList.remove("active"));
-            btn.classList.add("active");
-        });
+        if (isSoldOut) {
+            btn.disabled = true;
+            btn.title = "این سایز ناموجود است";
+        } else {
+            btn.addEventListener("click", () => {
+                qvSelectedSize = size;
+                wrap.querySelectorAll(".pd-size-btn").forEach((b) => b.classList.remove("active"));
+                btn.classList.add("active");
+            });
+        }
         wrap.appendChild(btn);
     });
 }
@@ -127,7 +134,8 @@ function qvOpen(id) {
     qvBuildModal();
 
     qvProduct = product;
-    qvSelectedSize = product.sizes[0];
+    const soldOutSizes = product.soldOutSizes || [];
+    qvSelectedSize = product.sizes.find((s) => !soldOutSizes.includes(s)) || product.sizes[0];
     qvSelectedColor = product.colors[0];
     qvQty = 1;
 

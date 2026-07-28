@@ -61,12 +61,68 @@ function initHeaderScrollEffect(){
     const header = document.querySelector("header");
     if (!header) return;
 
-    function updateHeaderState(){
-        header.classList.toggle("scrolled", window.scrollY > 10);
+    // Hysteresis: enter "scrolled" only past 60px, leave it only once back
+    // under 20px. A single hard threshold flickers when the scroll
+    // position hovers right at that pixel (slow scrolling, trackpad
+    // momentum), which shows up as the header visibly shaking.
+    const ENTER_AT = 60;
+    const EXIT_AT = 20;
+    let ticking = false;
+
+    function applyState(){
+        const y = window.scrollY;
+        if (y > ENTER_AT) {
+            header.classList.add("scrolled");
+        } else if (y < EXIT_AT) {
+            header.classList.remove("scrolled");
+        }
+        ticking = false;
     }
 
-    updateHeaderState();
-    window.addEventListener("scroll", updateHeaderState, { passive: true });
+    function onScroll(){
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(applyState);
+    }
+
+    applyState();
+    window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+function initNewsletterForm(){
+    const form = document.getElementById("newsletter-form");
+    const emailInput = document.getElementById("newsletter-email");
+    const agreeCheck = document.getElementById("newsletter-agree-check");
+    const note = document.getElementById("newsletter-note");
+    if (!form || !note) return;
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const email = emailInput ? emailInput.value.trim() : "";
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        if (!emailValid) {
+            note.textContent = "یه ایمیل معتبر وارد کن.";
+            return;
+        }
+        if (agreeCheck && !agreeCheck.checked) {
+            note.textContent = "برای عضویت، باید با قوانین موافقت کنی.";
+            return;
+        }
+
+        try {
+            const raw = localStorage.getItem("reyso_newsletter_emails");
+            const list = raw ? JSON.parse(raw) : [];
+            if (!list.includes(email)) list.push(email);
+            localStorage.setItem("reyso_newsletter_emails", JSON.stringify(list));
+        } catch (err) {
+            // localStorage unavailable — the confirmation message below still applies
+        }
+
+        note.textContent = "ثبت شد! به محض فعال شدن خبرنامه، بهت خبر می‌دیم.";
+        form.reset();
+    });
 }
 
 function setActiveNav(){
@@ -85,8 +141,8 @@ async function loadPartials(){
 
     try {
         const [headerHTML, footerHTML] = await Promise.all([
-            headerSlot ? fetch("partials/header.html?v=21").then((r) => r.text()) : Promise.resolve(""),
-            footerSlot ? fetch("partials/footer.html?v=21").then((r) => r.text()) : Promise.resolve("")
+            headerSlot ? fetch("partials/header.html?v=32").then((r) => r.text()) : Promise.resolve(""),
+            footerSlot ? fetch("partials/footer.html?v=32").then((r) => r.text()) : Promise.resolve("")
         ]);
 
         // Use outerHTML (not innerHTML) for the header specifically: header
@@ -100,6 +156,7 @@ async function loadPartials(){
 
         setActiveNav();
         initHeaderScrollEffect();
+        initNewsletterForm();
         applyContactLinks();
         injectFloatingContact();
     } catch (e) {
