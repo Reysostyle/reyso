@@ -141,8 +141,8 @@ async function loadPartials(){
 
     try {
         const [headerHTML, footerHTML] = await Promise.all([
-            headerSlot ? fetch("partials/header.html?v=32").then((r) => r.text()) : Promise.resolve(""),
-            footerSlot ? fetch("partials/footer.html?v=32").then((r) => r.text()) : Promise.resolve("")
+            headerSlot ? fetch("partials/header.html?v=33").then((r) => r.text()) : Promise.resolve(""),
+            footerSlot ? fetch("partials/footer.html?v=33").then((r) => r.text()) : Promise.resolve("")
         ]);
 
         // Use outerHTML (not innerHTML) for the header specifically: header
