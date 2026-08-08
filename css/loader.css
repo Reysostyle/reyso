@@ -1,0 +1,117 @@
+/* =====================================================
+   REYSO — PAGE LOADER
+   Traced from a real vintage Singer sewing machine photo
+   (his reference, side angle), recolored to the brand
+   palette. The balance wheel + hand-crank spin as one
+   unit, the needle bar bobs, and the dashed stitch line
+   underneath moves — reading as "actively sewing" while
+   the page (and its header/footer partials) load. See
+   js/loader.js for the show/hide logic.
+===================================================== */
+
+.site-loader{
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--cream, #F7F3EA);
+    transition: opacity .4s ease, visibility .4s ease;
+}
+
+.site-loader.loader-hidden{
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.sewing-loader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.sewing-svg{
+    width: 132px;
+    height: auto;
+    overflow: visible;
+}
+
+.sm-rock{
+    transform-origin: 330px 348px;
+    animation: sm-rock 1.1s ease-in-out infinite;
+}
+
+.sm-icon{
+    fill: var(--deep-green, #1C4436);
+}
+
+.sm-wheel-group{
+    transform-origin: 545px 95px;
+    animation: sm-spin 1.1s linear infinite;
+}
+
+.sm-wheel{
+    fill: var(--cream, #F7F3EA);
+    stroke: var(--gold, #AD9155);
+    stroke-width: 7;
+}
+
+.sm-wheel-spoke{
+    stroke: var(--gold, #AD9155);
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.sm-crank-arm{
+    stroke: var(--gold, #AD9155);
+    stroke-width: 6;
+    stroke-linecap: round;
+}
+
+.sm-crank-knob{
+    fill: var(--gold, #AD9155);
+}
+
+.sm-needle{
+    stroke: var(--gold, #AD9155);
+    stroke-width: 8;
+    stroke-linecap: round;
+    transform-origin: 98px 155px;
+    animation: sm-needle .55s ease-in-out infinite;
+}
+
+.sm-stitch{
+    stroke: var(--gold, #AD9155);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 12 17;
+    animation: sm-stitch 1.1s linear infinite;
+}
+
+.sewing-loader-label{
+    font-family: var(--font-display, "Estedad", sans-serif);
+    font-size: 13.5px;
+    color: var(--deep-green, #1C4436);
+    letter-spacing: .2px;
+}
+
+@keyframes sm-rock{
+    0%, 100%{ transform: rotate(-.7deg); }
+    50%{ transform: rotate(.7deg); }
+}
+
+@keyframes sm-spin{
+    to{ transform: rotate(360deg); }
+}
+
+@keyframes sm-needle{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(9px); }
+}
+
+@keyframes sm-stitch{
+    to{ stroke-dashoffset: -58; }
+}

@@ -67,15 +67,34 @@ function initHeaderScrollEffect(){
     // momentum), which shows up as the header visibly shaking.
     const ENTER_AT = 60;
     const EXIT_AT = 20;
+    // Ignore tiny scroll jitter when deciding direction (down = hide,
+    // up = reveal + freeze) so it doesn't flicker on small wobbles.
+    const DIRECTION_DEADZONE = 5;
     let ticking = false;
+    let lastY = window.scrollY;
 
     function applyState(){
         const y = window.scrollY;
+
         if (y > ENTER_AT) {
             header.classList.add("scrolled");
         } else if (y < EXIT_AT) {
             header.classList.remove("scrolled");
         }
+
+        const delta = y - lastY;
+        if (y <= EXIT_AT) {
+            // near the top — always visible
+            header.classList.remove("header-hidden");
+        } else if (delta > DIRECTION_DEADZONE) {
+            // scrolling down — fade out, don't stay frozen
+            header.classList.add("header-hidden");
+        } else if (delta < -DIRECTION_DEADZONE) {
+            // scrolling up — reveal and freeze in place
+            header.classList.remove("header-hidden");
+        }
+
+        lastY = y;
         ticking = false;
     }
 
@@ -125,9 +144,45 @@ function initNewsletterForm(){
     });
 }
 
+function injectMobileTabBar(){
+    if (document.getElementById("mobile-tab-bar")) return;
+
+    const current = window.location.pathname.split("/").pop() || "index.html";
+    const matchHref = current === "shop-details.html" ? "shop.html"
+        : current === "collection-details.html" ? "collections.html"
+        : current;
+
+    const tabs = [
+        { href: "index.html", icon: "ri-home-5-line", label: "خانه" },
+        { href: "collections.html", icon: "ri-apps-2-line", label: "دسته‌بندی" },
+        { href: "cart.html", icon: "ri-shopping-bag-line", label: "سبد خرید", badge: "cart-count" },
+        { href: "track-order.html", icon: "ri-user-line", label: "پروفایل" }
+    ];
+
+    const wrap = document.createElement("div");
+    wrap.id = "mobile-tab-bar";
+    wrap.className = "mobile-tab-bar";
+    wrap.innerHTML = tabs
+        .map((tab) => {
+            const active = matchHref === tab.href ? " active" : "";
+            const badge = tab.badge ? '<span class="' + tab.badge + '" hidden>0</span>' : "";
+            return (
+                '<a href="' + tab.href + '" class="mobile-tab-item' + active + '">' +
+                '<span class="mobile-tab-icon"><i class="' + tab.icon + '"></i>' + badge + "</span>" +
+                '<span class="mobile-tab-label">' + tab.label + "</span>" +
+                "</a>"
+            );
+        })
+        .join("");
+
+    document.body.appendChild(wrap);
+}
+
 function setActiveNav(){
     const current = window.location.pathname.split("/").pop() || "index.html";
-    const matchHref = current === "shop-details.html" ? "shop.html" : current;
+    const matchHref = current === "shop-details.html" ? "shop.html"
+        : current === "collection-details.html" ? "collections.html"
+        : current;
 
     document.querySelectorAll("header nav a, .mobile-menu-links a").forEach((a) => {
         const href = a.getAttribute("href");
@@ -141,8 +196,8 @@ async function loadPartials(){
 
     try {
         const [headerHTML, footerHTML] = await Promise.all([
-            headerSlot ? fetch("partials/header.html?v=34").then((r) => r.text()) : Promise.resolve(""),
-            footerSlot ? fetch("partials/footer.html?v=34").then((r) => r.text()) : Promise.resolve("")
+            headerSlot ? fetch("partials/header.html?v=53").then((r) => r.text()) : Promise.resolve(""),
+            footerSlot ? fetch("partials/footer.html?v=53").then((r) => r.text()) : Promise.resolve("")
         ]);
 
         // Use outerHTML (not innerHTML) for the header specifically: header
@@ -159,6 +214,7 @@ async function loadPartials(){
         initNewsletterForm();
         applyContactLinks();
         injectFloatingContact();
+        injectMobileTabBar();
     } catch (e) {
         // If the page was opened directly as a file:// URL, fetch will fail —
         // header/footer simply won't render. Serve the folder over http(s) instead.

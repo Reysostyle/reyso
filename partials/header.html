@@ -34,6 +34,12 @@
 
 
             <li>
+                <a href="collections.html">
+                   کالکشن‌ها                </a>
+            </li>
+
+
+            <li>
                 <a href="education.html">
                    آموزش                </a>
             </li>
@@ -57,6 +63,11 @@
     <div class="nav-right">
 
 
+        <button class="search-nav-btn" aria-label="جستجو">
+            <i class="ri-search-line"></i>
+        </button>
+
+
         <a href="cart.html" class="cart">
 
             <i class="ri-shopping-bag-line"></i>
@@ -73,14 +84,6 @@
                 <i class="ri-heart-line"></i>
                 <span class="wishlist-count" hidden>0</span>
             </button>
-            <div class="wishlist-panel">
-                <button class="wishlist-panel-close" aria-label="بستن">
-                    <i class="ri-close-line"></i>
-                </button>
-                <h4>علاقه‌مندی‌ها</h4>
-                <ul class="wishlist-panel-list"></ul>
-                <p class="wishlist-empty">هنوز چیزی به علاقه‌مندی‌ها اضافه نکرده‌اید.</p>
-            </div>
         </div>
 
 
@@ -103,8 +106,26 @@
 
 </div>
 
+</header>
 
-<!-- ---------- Mobile menu overlay ---------- -->
+
+<!-- ---------- Wishlist panel (outside <header> on purpose — a
+     transform/filter/backdrop-filter on header would otherwise
+     break this panel's fixed positioning) ---------- -->
+
+<div class="wishlist-panel">
+    <button class="wishlist-panel-close" aria-label="بستن">
+        <i class="ri-close-line"></i>
+    </button>
+    <h4>علاقه‌مندی‌ها</h4>
+    <ul class="wishlist-panel-list"></ul>
+    <p class="wishlist-empty">هنوز چیزی به علاقه‌مندی‌ها اضافه نکرده‌اید.</p>
+</div>
+<div class="wishlist-backdrop"></div>
+
+
+<!-- ---------- Mobile menu overlay (same reason, kept outside
+     <header>) ---------- -->
 
 <div class="mobile-menu">
 
@@ -120,11 +141,16 @@
     <ul class="mobile-menu-links">
         <li><a href="index.html">خانه</a></li>
         <li><a href="shop.html">محصولات</a></li>
+        <li><a href="collections.html">کالکشن‌ها</a></li>
         <li><a href="education.html">آموزش</a></li>
         <li><a href="about.html">درباره ما</a></li>
     </ul>
 
     <div class="mobile-menu-actions">
+        <button class="search-nav-btn mobile-search-btn" aria-label="جستجو">
+            <i class="ri-search-line"></i>
+            جستجو
+        </button>
         <a href="cart.html" class="cart">
             <i class="ri-shopping-bag-line"></i>
             سبد خرید
@@ -141,7 +167,22 @@
 </div>
 
 <div class="mobile-menu-backdrop"></div>
-<div class="wishlist-backdrop"></div>
 
 
-</header>
+<!-- ---------- Search overlay (kept outside <header>, same
+     reason as the wishlist panel above) ---------- -->
+
+<div class="search-overlay">
+    <div class="search-overlay-box">
+        <button class="search-overlay-close" aria-label="بستن">
+            <i class="ri-close-line"></i>
+        </button>
+        <div class="search-overlay-field">
+            <i class="ri-search-line"></i>
+            <input type="text" id="search-input" placeholder="دنبال چی می‌گردی؟" autocomplete="off">
+        </div>
+        <div class="search-overlay-results" id="search-results"></div>
+        <p class="search-overlay-empty" id="search-empty" hidden>محصولی با این مشخصات پیدا نشد.</p>
+    </div>
+</div>
+<div class="search-overlay-backdrop"></div>

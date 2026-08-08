@@ -74,6 +74,7 @@
 html{
     scroll-behavior: smooth;
     overflow-x: hidden;
+    color-scheme: light;
 }
 
 body{
@@ -184,7 +185,13 @@ header{
     position: sticky;
     top: 0;
     z-index: 50;
-    transition: padding var(--t-medium);
+    transition: padding var(--t-medium), transform .35s var(--ease-soft, ease), opacity .35s var(--ease-soft, ease);
+}
+
+header.header-hidden{
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
 }
 
 header.scrolled{
@@ -373,6 +380,25 @@ nav a.active::after{
     font-weight: 500;
     padding: 10px 6px;
     transition: color var(--t-fast);
+}
+
+.search-nav-btn{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cream);
+    font-size: 14.5px;
+    font-weight: 500;
+    padding: 10px 6px;
+    transition: color var(--t-fast);
+}
+
+.search-nav-btn i{
+    font-size: 19px;
+}
+
+.search-nav-btn:hover{
+    color: var(--gold);
 }
 
 .wishlist-nav-btn i{
@@ -957,7 +983,7 @@ body.menu-open{
 
 .category-grid{
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 20px;
 }
 
@@ -979,57 +1005,30 @@ body.menu-open{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 1.1s var(--ease-soft);
+    filter: blur(3px) brightness(.72);
+    transition: filter var(--t-medium), transform 1.1s var(--ease-soft);
 }
 
 .category-card:hover img{
+    filter: blur(1.5px) brightness(.6);
     transform: scale(1.08);
 }
 
-/* ---------- Bottom label bar ---------- */
+/* ---------- Name label — always visible over the blurred photo ---------- */
 
 .category-label{
     position: absolute;
-    inset-inline: 0;
-    bottom: 0;
-    height: 72px;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--deep-green);
+    padding: 0 14px;
     color: var(--cream);
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: .2px;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: .3px;
     text-align: center;
-}
-
-/* Devices with real hover: bar stays hidden until the card is hovered */
-@media (hover: hover) and (pointer: fine){
-
-    .category-label{
-        transform: translateY(100%);
-        transition: transform .5s var(--ease-soft), background var(--t-fast), color var(--t-fast);
-    }
-
-    .category-card:hover .category-label{
-        transform: translateY(0);
-    }
-
-    .category-label:hover{
-        background: var(--gold);
-        color: var(--deep-green-700);
-    }
-
-}
-
-/* Touch devices: label bar stays visible, no reliance on hover */
-@media (hover: none), (pointer: coarse){
-
-    .category-label{
-        background: rgba(28,68,54,.88);
-    }
-
+    text-shadow: 0 2px 10px rgba(15,25,20,.5);
 }
 
 
@@ -3112,7 +3111,7 @@ body.menu-open{
 .col-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 260px;
+    grid-auto-rows: 320px;
     gap: 22px;
 }
 
@@ -3121,10 +3120,6 @@ body.menu-open{
     border-radius: var(--r-lg);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-}
-
-.col-tile-lg{
-    grid-row: span 2;
 }
 
 .col-tile img{
@@ -3170,6 +3165,135 @@ body.menu-open{
 
 .col-tile:hover .col-tile-arrow{
     background: var(--gold);
+    transform: translateX(-4px);
+}
+
+
+/* =====================================================
+   COLLECTION DETAILS PAGE
+===================================================== */
+
+#cold-grid{
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px 20px;
+}
+
+.cold-toolbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.cold-toolbar h2{
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--deep-green);
+}
+
+.cold-toolbar a{
+    font-size: 14px;
+    color: var(--text-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color var(--t-fast);
+}
+
+.cold-toolbar a:hover{
+    color: var(--gold);
+}
+
+.cold-empty{
+    text-align: center;
+    padding: 70px 0;
+    color: var(--text-mute);
+}
+
+
+/* =====================================================
+   SEASONAL SET CAMPAIGN BANNER (homepage)
+===================================================== */
+
+.season-banner-section{
+    padding: 10px 0 20px;
+}
+
+.season-banner{
+    position: relative;
+    display: block;
+    height: 480px;
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.season-banner img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 1.4s var(--ease-soft);
+}
+
+.season-banner:hover img{
+    transform: scale(1.045);
+}
+
+.season-banner-overlay{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px;
+    background: linear-gradient(90deg, rgba(15,25,20,.72) 0%, rgba(15,25,20,.32) 55%, rgba(15,25,20,.05) 100%);
+}
+
+.season-banner-badge{
+    display: inline-block;
+    padding: 7px 16px;
+    border-radius: 100px;
+    background: var(--gold);
+    color: var(--deep-green-700);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    margin-bottom: 18px;
+}
+
+.season-banner-overlay h2{
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 48px);
+    color: var(--cream);
+    margin-bottom: 14px;
+}
+
+.season-banner-overlay p{
+    max-width: 420px;
+    color: var(--cream);
+    opacity: .85;
+    font-size: 15.5px;
+    line-height: 1.85;
+    margin-bottom: 26px;
+}
+
+.season-banner-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    border-radius: 100px;
+    background: var(--gold);
+    color: var(--deep-green-700);
+    font-size: 14.5px;
+    font-weight: 700;
+    transition: background var(--t-fast), transform var(--t-fast);
+}
+
+.season-banner:hover .season-banner-btn{
+    background: var(--gold-light);
     transform: translateX(-4px);
 }
 
@@ -4332,30 +4456,23 @@ body.menu-open{
     color: var(--deep-green);
 }
 
-@media (max-width: 900px) and (min-width: 769px){
-    .qv-content{
-        grid-template-columns: 1fr;
-    }
-    .qv-media{
-        aspect-ratio: 4 / 2.6;
-    }
-}
-
-@media (max-width: 768px){
+@media (max-width: 900px){
     .qv-modal{
-        padding: 10px;
+        padding: 6px;
     }
     .qv-box{
-        max-height: 96vh;
+        max-height: 98vh;
     }
     .qv-content{
         grid-template-columns: 1fr;
     }
     .qv-media{
+        width: 100%;
         aspect-ratio: 4 / 2.3;
+        max-height: 22vh;
     }
     .qv-info{
-        padding: 16px 18px 18px;
+        padding: 12px 16px 14px;
     }
     .qv-info h3{
         font-size: 18px;
@@ -4502,6 +4619,12 @@ body.menu-open{
     }
 }
 
+@media (max-width: 768px){
+    .pd-sticky-bar{
+        bottom: 66px;
+    }
+}
+
 
 /* =====================================================
    FLOATING WHATSAPP / TELEGRAM WIDGET
@@ -4545,7 +4668,7 @@ body.menu-open{
 @media (max-width: 768px){
     .floating-contact{
         left: 14px;
-        bottom: 84px;
+        bottom: 150px;
     }
     .floating-contact-btn{
         width: 46px;
@@ -4828,4 +4951,250 @@ body.menu-open .floating-contact{
     border-top: none;
     margin-top: 10px;
     padding-top: 0;
+}
+
+
+/* =====================================================
+   SEARCH OVERLAY
+===================================================== */
+
+.search-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 90px 20px 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--t-medium, .35s ease);
+}
+
+.search-overlay.open{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-overlay-backdrop{
+    position: fixed;
+    inset: 0;
+    z-index: 1290;
+    background: rgba(28, 68, 54, .22);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--t-medium, .35s ease);
+}
+
+.search-overlay-backdrop.open{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-overlay-box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 560px;
+    max-height: 76vh;
+    background: var(--cream);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 60px 22px 22px;
+    overflow: hidden;
+}
+
+.search-overlay-close{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--cream-600);
+    color: var(--text-mute);
+    font-size: 18px;
+    transition: background var(--t-fast), color var(--t-fast);
+}
+
+.search-overlay-close:hover{
+    background: var(--cream-600);
+    color: var(--deep-green);
+}
+
+.search-overlay-field{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    background: var(--cream);
+    border: 1.5px solid var(--line-gold);
+    border-radius: var(--r-full);
+    padding: 12px 18px;
+    margin-bottom: 16px;
+    transition: border-color var(--t-fast);
+}
+
+.search-overlay-field:focus-within{
+    border-color: var(--gold);
+}
+
+.search-overlay-field i{
+    font-size: 18px;
+    color: var(--text-mute);
+}
+
+.search-overlay-field input{
+    flex: 1;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--cream);
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.search-overlay-field input::placeholder{
+    color: var(--text-mute);
+}
+
+.search-overlay-results{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    margin: 0 -10px;
+    padding: 0 10px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-gold) transparent;
+}
+
+.search-overlay-results::-webkit-scrollbar{
+    width: 6px;
+}
+
+.search-overlay-results::-webkit-scrollbar-thumb{
+    background: var(--line-gold);
+    border-radius: 10px;
+}
+
+.search-overlay-results::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+.search-result-item{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px;
+    border-radius: var(--r-md);
+    transition: background var(--t-fast);
+}
+
+.search-result-item:hover{
+    background: var(--cream-600);
+}
+
+.search-result-item img{
+    width: 48px;
+    height: 58px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.search-result-info p{
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--deep-green);
+    margin-bottom: 3px;
+}
+
+.search-result-info span{
+    font-size: 12px;
+    color: var(--gold);
+}
+
+.search-overlay-empty{
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-soft);
+    padding: 20px 0;
+}
+
+@media (max-width: 640px){
+    .search-overlay{
+        padding: 70px 14px 14px;
+    }
+    .search-overlay-box{
+        padding: 56px 18px 18px;
+    }
+}
+
+
+/* =====================================================
+   MOBILE BOTTOM TAB BAR
+   Fixed home/categories/cart/profile bar shown only on
+   mobile — the top header no longer stays frozen there,
+   this is the persistent navigation instead.
+===================================================== */
+
+.mobile-tab-bar{
+    display: none;
+}
+
+@media (max-width: 768px){
+    .mobile-tab-bar{
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 400;
+        background: var(--cream);
+        box-shadow: 0 -6px 20px rgba(15,25,20,.10);
+        padding: 7px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+        align-items: stretch;
+        justify-content: space-around;
+    }
+
+    body{
+        padding-bottom: 62px;
+    }
+}
+
+.mobile-tab-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    flex: 1;
+    color: var(--text-mute);
+    font-size: 10.5px;
+    padding: 4px 0;
+    transition: color var(--t-fast);
+}
+
+.mobile-tab-item.active{
+    color: var(--deep-green);
+}
+
+.mobile-tab-icon{
+    position: relative;
+    font-size: 21px;
+    line-height: 1;
+}
+
+.mobile-tab-icon .cart-count,
+.mobile-tab-icon .wishlist-count{
+    top: -7px;
+    right: -10px;
 }

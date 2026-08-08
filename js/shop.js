@@ -36,10 +36,12 @@ function shopUniqueColors() {
 function shopRenderFilterOptions() {
     const catWrap = document.getElementById("filter-categories");
     shopUniqueCategories().forEach((cat) => {
+        const collection = getCollectionBySlug(cat);
         const label = document.createElement("label");
         label.className = "filter-check";
         label.innerHTML =
-            '<input type="checkbox" value="' + cat + '"><span>' + cat + "</span>";
+            '<input type="checkbox" value="' + cat + '"><span>' +
+            (collection ? collection.name : cat) + "</span>";
         label.querySelector("input").addEventListener("change", (e) => {
             if (e.target.checked) shopState.categories.add(cat);
             else shopState.categories.delete(cat);
@@ -120,7 +122,10 @@ function shopRenderActiveChips() {
     wrap.innerHTML = "";
 
     const chips = [];
-    shopState.categories.forEach((c) => chips.push({ label: c, remove: () => shopState.categories.delete(c) }));
+    shopState.categories.forEach((c) => {
+        const collection = getCollectionBySlug(c);
+        chips.push({ label: collection ? collection.name : c, remove: () => shopState.categories.delete(c) });
+    });
     shopState.sizes.forEach((s) => chips.push({ label: "سایز " + s, remove: () => shopState.sizes.delete(s) }));
     shopState.colors.forEach((c) => chips.push({ label: c, remove: () => shopState.colors.delete(c) }));
     if (shopState.maxPrice < 5000000) {
